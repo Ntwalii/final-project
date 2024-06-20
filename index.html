@@ -20,14 +20,48 @@
           document.getElementById(id).innerHTML = html;
     })
     };
+    //login form
+    const addFormSubmitHandler = () => {
+      const form = document.getElementById('loginForm');
+      if(!form){
+        console.log("missing") 
+      }
+      form.addEventListener('submit', (event) => {
+        console.log("Here to conquer")
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://localhost:3000/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+         if(data.status===201){
+          localStorage.setItem("role",data.role)
+          localStorage.setItem("token",data.token)
+          window.location.href = 'collectorSchedule.html';
+         }
+         else{
+          alert(data.message)
+         }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+    }; 
+
+
     window.onload = () => {
       loadComponents("login", "src/sections/login.html");
-      loadComponents("hero", "src/sections/hero.html");
-      loadComponents("about", "src/sections/about.html");
-      loadComponents("sticky", "src/sections/sticky.html");
-      loadComponents("reference", "src/sections/reference.html");
-      loadComponents("services", "src/sections/services.html");
-      loadComponents("footer", "src/sections/footer.html");
     };
   </script>
   <body class="relative">
