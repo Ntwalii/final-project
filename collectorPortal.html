@@ -17,6 +17,7 @@
     <div class="flex">
     <div id="nav"></div>
     <div id="main" class="lg:h-[100vh] w-full lg:w-4/5 pl-10 py-5 pr-16 bg-customGray">
+
     </div>
   </body>
 </html>
@@ -26,6 +27,48 @@
   const element=document.getElementById('nav')
   const main=document.querySelector('#main')
   console.log(main)
+  function loadRoutes(){
+    main.innerHTML=`      <a class="lg:hidden absolute text-2xl top-16 right-8" href="/mobileNav.html"><i class="fa-solid fa-bars "></i></a>
+    <div class="lg:flex justify-between lg:mt-auto mt-10">
+    <div>
+    <p class="font-bold text-3xl">Good morning</p>
+    <p class="font-medium text-[#7E7C7C] text-sm">14th April 2024</p>
+    </div>
+    <div class="h-full my-auto mt-10 lg:mt-auto">
+        <input type="text" placeholder="Search" class="px-10 rounded-3xl bg-[#EFEFEF] py-2 border-none">
+    </div>
+
+  
+</div>
+<div class="description mt-10 text-[#494949] font-medium text-lg lg:text-md">
+    <p>Welcome to your route management portal</span></p>
+</div>
+<div class="lg:flex gap-10">
+    <div class="bg-white mt-10 rounded-xl p-5 w-full lg:w-3/5 lg:h-[280px]">
+    <p class="font-semibold text-[#3d3d3d] text-lg">Scheduled collections</p>
+    <p class="font-semibold text-[#3d3d3d] text-md mt-8">Please enter a new route name</p>
+      <form action="" class="mt-4">
+        <input type="text" id="route" name="route" placeholder="Enter a route name" class="w-full mx-auto px-5 rounded-md py-2 border-[#8a8a8a] border">
+      </form>
+    <button class="w-full bg-[#1344B2] py-2 mt-5 rounded-md text-white font-semibold">Add </button>
+    </div>
+    <div class="bg-white mt-10 rounded-xl p-5 w-full lg:w-2/5 lg:h-[280px]">
+        <p class="font-bold text-[#3d3d3d] text-xl  text-center">Routes</p>
+        <div class="flex gap-10 lg:gap-20 mt-5 text-[#1344B2] font-semibold text-center">
+           <div class="w-full">
+            <p class="w-full">Route name</p>
+            <div class="text-[#3d3d3d] mt-5 flex flex-col gap-5">
+            <p>MONDAY</p>
+            <p>TUESDAY</p>
+            <p>WEDNESDAY</p>
+           
+            </div>
+            </div>
+            
+        </div>
+        </div>
+</div>`
+  }
   function loadScheduleForm(){
     main.innerHTML=`<div class="flex justify-between">
         <div>
@@ -231,6 +274,7 @@ function loadAppointments(){
             route.setAttribute('class','flex p-3 border-2 rounded-md bg-customBlue')
             appo.setAttribute('class',"flex p-3")
             dash.setAttribute('class',"flex p-3")
+            loadRoutes();
           }
         });
     }
