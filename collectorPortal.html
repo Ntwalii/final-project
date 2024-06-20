@@ -26,7 +26,41 @@
 <script>
   const element=document.getElementById('nav')
   const main=document.querySelector('#main')
-  console.log(main)
+  const baseUrl = "http://localhost:3000"
+  const addNewRoute = ()=>{
+    event.preventDefault()
+    const name = document.getElementById("routeName").value
+    const day = document.getElementById("day").value
+    const description = document.getElementById("description").value
+    const authToken = localStorage.getItem("token")
+    const pathUrl = "/roads/register"
+    const url = `${baseUrl}${pathUrl}`
+    fetch(url,
+    {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+            name: name,
+            day: day,
+            description:description
+     })
+    
+  }
+    ).then(response=>response.json()).
+    then(data=>{
+      console.log("Data from backend",data)
+    if(data.status===201){
+      loadRoutes()
+    }
+    else{
+      alert(data.message)
+    }
+  }
+    )
+  }
   function loadRoutes(){
     main.innerHTML=`      <a class="lg:hidden absolute text-2xl top-16 right-8" href="/mobileNav.html"><i class="fa-solid fa-bars "></i></a>
     <div class="lg:flex justify-between lg:mt-auto mt-10">
@@ -48,26 +82,68 @@
     <p class="font-semibold text-[#3d3d3d] text-lg">Scheduled collections</p>
     <p class="font-semibold text-[#3d3d3d] text-md mt-8">Please enter a new route name</p>
       <form action="" class="mt-4">
-        <input type="text" id="route" name="route" placeholder="Enter a route name" class="w-full mx-auto px-5 rounded-md py-2 border-[#8a8a8a] border">
-      </form>
-    <button class="w-full bg-[#1344B2] py-2 mt-5 rounded-md text-white font-semibold">Add </button>
+        <input type="text" id="routeName" name="route" placeholder="Enter a route name" class="w-full mx-auto px-5 rounded-md py-2 border-[#8a8a8a] border">
+        <textarea name="Comment" id="description" class="w-full h-36 mt-5 px-5 rounded-md py-2 border-[#8a8a8a] border" placeholder="Route description" required></textarea>
+        <select id="day" class="my-3 border border-gray-400 w-3/4 py-1 px-4 rounded-md mt-2" required>
+                 <option value="" disabled >Operation Day</option>
+                  <option value="MONDAY" >MONDAY</option>
+                  <option value="TUESDAY">TUESDAY</option>
+                  <option value="WEDNESDAY" >WEDNESDAY</option>
+                  <option value="THURSDAY">THURSDAY</option>
+                  <option value="FRIDAY" >FRIDAY</option>
+                  <option value="SATURDAY">SATURDAY</option>
+                  <option value="SUNDAY" >SUNDAY</option>
+              </select>
+        </form>
+    <button class="w-full bg-[#1344B2] py-2 mt-5 rounded-md text-white font-semibold" onclick="addNewRoute()">Add </button>
     </div>
     <div class="bg-white mt-10 rounded-xl p-5 w-full lg:w-2/5 lg:h-[280px]">
         <p class="font-bold text-[#3d3d3d] text-xl  text-center">Routes</p>
         <div class="flex gap-10 lg:gap-20 mt-5 text-[#1344B2] font-semibold text-center">
            <div class="w-full">
-            <p class="w-full">Route name</p>
-            <div class="text-[#3d3d3d] mt-5 flex flex-col gap-5">
-            <p>MONDAY</p>
-            <p>TUESDAY</p>
-            <p>WEDNESDAY</p>
-           
+            <div class="text-[#3d3d3d] mt-5 flex flex-col gap-5" id="routesColumn">
+            <p>Loading routes</p>
             </div>
             </div>
             
         </div>
         </div>
 </div>`
+
+const routeColumn = document.getElementById("routesColumn")
+const pathUrl = "/roads/collectorRoutes"
+const url = `${baseUrl}${pathUrl}`
+const authToken = localStorage.getItem("token")
+fetch(url,
+    {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    }
+  }
+    ).then(response=>response.json()).then(
+      data=>{
+        console.log("Data from backend",data)
+    if(data.status===200){ 
+      if(data.data.length>0){
+        let inputData ='';
+        data.data.forEach(element=>{
+          inputData+=`<p>${element.name}</p>`
+        })
+
+        routeColumn.innerHTML = inputData;
+      } 
+      else{
+          routeColumn.innerHTML='<p>No routes found</p>'
+      }
+      }
+      else{
+        alert(data.message)
+      }
+    }
+
+    )
   }
   function loadScheduleForm(){
     main.innerHTML=`<div class="flex justify-between">
@@ -192,64 +268,62 @@ function loadAppointments(){
             <input type="text" placeholder="Search" class="px-10 rounded-3xl bg-[#EFEFEF] py-2 border-none">
         </div>
     </div>
-    <div class="flex justify-between w-full py-2 bg-white mt-16 rounded-md px-4">
-      <div class="flex gap-3 w-1/2 font-medium">
-        <img src="./src/images/light.png" class="py-2" alt="">
-        <p class="my-auto">Add to your schedule</p>
-      </div>
-      <button id='book' class="py-1 rounded-md text-white font-medium px-10 my-auto bg-[#1344B2]">
-        Book
-      </button>
-    </div>
+  
     <div class="w-full bg-white h-[60vh] mt-5 px-10 py-4">
       <p class="text-[#1344B2] font-semibold border-b-[#1344B2] w-28 pb-2 border-b-2 mb-4">Appointments</p>
-      <div class="flex text-center border rounded-md">
-      <div id="Names" class="w-2/5 border flex flex-col gap-2">
-        <p class="text-[#424242] border-b bg-customGray">Names</p>
-        <p class="border-b">Date</p>
-        <p class="border-b">Routes</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-      </div>
-      <div id="Names" class="w-1/5 gap-2 border flex flex-col">
-        <p class="text-[#424242] border-b bg-customGray">Date</p>
-        <p class="border-b">Date</p>
-        <p class="border-b">Routes</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-      </div>
-      <div id="Names" class="w-1/5 gap-2 border flex flex-col">
-        <p class="text-[#424242] border-b bg-customGray">Routes</p>
-        <p class="border-b">Date</p>
-        <p class="border-b">Routes</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-      </div>
-      <div id="Names" class="w-1/5 gap-2 border flex flex-col">
-        <p class="text-[#424242] border-b bg-customGray">Comments</p>
-        <p class="border-b">Date</p>
-        <p class="border-b">Routes</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-        <p class="border-b">Comments</p>
-      </div>
+      <div class="flex text-center border rounded-md" id="appTable">
+          <p>loading </p>
     </div>
     </div>`
-    const bookButton=document.getElementById('book')
-    book.addEventListener('click', loadScheduleForm)
-}
+    const appTable = document.getElementById('appTable')
+    const pathUrl = "/waste/getCollectorUnCollected"
+    const url = `${baseUrl}${pathUrl}`
+    const authToken = localStorage.getItem("token")
+    fetch(url,
+    {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    }
+  }
+    ).then(response=>response.json()).
+    then(data=>{
+      console.log("Data from backend",data)
+    if(data.status===200){
 
+      let typeInput = '<p class="text-[#424242] border-b bg-customGray">Types</p>'
+      let date = '<p class="text-[#424242] border-b bg-customGray">Date</p>'
+      let route = '<p class="text-[#424242] border-b bg-customGray">Routes</p>'
+      let collectionStatus = '<p class="text-[#424242] border-b bg-customGray">Status</p>'
+      if(data.data.length>0){
+       data.data.forEach(element=>{
+        typeInput += ` <p class="border-b">${element.type}</p>`
+        const localDateTime = new Date(element.createdAt);
+       const localDateOnly = localDateTime.toISOString().split('T')[0];
+        date +=`<p class="border-b">${localDateOnly}</p>` 
+        route +=`<p class="border-b">${element.routeName}</p>` 
+        const status = element.isCollected ? "Collected":"UnCollected"
+        collectionStatus += `<p class="border-b">${status}</p>`
+       })
+       const typeInputDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${typeInput}</div>`
+       const dateDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${date}</div>`
+       const routeDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${route}</div>`
+       const statusDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${collectionStatus}</div>`
+
+       appTable.innerHTML=typeInputDiv+dateDiv+ routeDiv+statusDiv
+      }
+      else{
+        appTable.innerHTML="<p> No available appointments for you </p>"
+      }
+    }
+    else{
+      alert(data.message)
+    }
+  }
+    )
+
+}
   function initializeSideBar() {
         const element = document.querySelector("div");
         const dash = document.getElementById("dash");

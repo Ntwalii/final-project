@@ -307,26 +307,20 @@ function loadAppointments(){
         const element = document.querySelector("div");
         const dash = document.getElementById("dash");
         const appo = element.querySelector("#appo");
-        const route = element.querySelector("#route");
 
         element.addEventListener('click', (e) => {
             e.stopPropagation(); 
             if(e.target===dash){
             dash.setAttribute('class','flex p-3 border-2 rounded-md bg-customBlue')
             appo.setAttribute('class',"flex p-3")
-            route.setAttribute('class',"flex p-3")
+        
             loadDashboard();
           }
           else if(e.target===appo){
             appo.setAttribute('class','flex p-3 border-2 rounded-md bg-customBlue')
             dash.setAttribute('class',"flex p-3")
-            route.setAttribute('class',"flex p-3")
+          
             loadAppointments()
-          }
-          else if(e.target===route){
-            route.setAttribute('class','flex p-3 border-2 rounded-md bg-customBlue')
-            appo.setAttribute('class',"flex p-3")
-            dash.setAttribute('class',"flex p-3")
           }
         });
     }
@@ -334,7 +328,6 @@ function loadAppointments(){
     
     element.innerHTML=`<div class='w-72 h-[100vh] flex flex-col space-y-7 pl-10 pt-32 border-r-2 font-medium'>
     <p class='flex p-3' id='dash'><img class='mr-5' src='./src/images/1828791 1.png' alt=''>Dashboard</p>
-    <p class='flex p-3' id='route'><img class='mr-5' src='./src/images/distance.png' alt=''>Route management</p>
     <p class='flex p-3' id='appo'><img class='mr-5' src='./src/images/appointment.png' alt=''>Appointments</p>
 </div>`
 initializeSideBar();
