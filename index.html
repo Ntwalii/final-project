@@ -47,7 +47,13 @@
          if(data.status===201){
           localStorage.setItem("role",data.role)
           localStorage.setItem("token",data.token)
-          window.location.href = 'collectorSchedule.html';
+          if(data.role==='COLLECTOR'){
+          window.location.href = 'collectorPortal.html';
+          }
+          if(data.role==='USER'){
+            window.location.href = 'householdPortal.html';
+          }
+
          }
          else{
           alert(data.message)

@@ -1,0 +1,86 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/src/output.css" />
+        <title>Website Project</title>
+      </head>
+<body>
+  <div>
+    <div class="flex relative">
+        <div class="w-1/2 px-32 my-auto">
+            <img src="./src/images/logo.png" class="w-60" alt="">
+            
+            <form id="loginForm" action="" class="flex flex-col mt-10 text-gray-500 font-medium">
+              <label for="">Name:</label>
+              <input type="text" class="my-3 border border-gray-400 w-3/4 py-1 px-4 rounded-md" id="name">
+              <label for="">E-mail:</label>
+              <input type="email" class="my-3 border border-gray-400 w-3/4 py-1 px-4 rounded-md" id="email">
+              <label for="">Password:</label>
+              <input type="password" class="my-3 border border-gray-400 w-3/4 py-1 px-4 rounded-md" id="password">
+              <label for="">Type</label>
+              <div>
+                <select id="role" class="my-3 border border-gray-400 w-3/4 py-1 px-4 rounded-md">
+                  <option value="COLLECTOR" >Company</option>
+                  <option value="USER">House Hold</option>
+              </select>
+            </div>
+              <button class="my-3 bg-customBlue text-white  w-3/4 py-1 rounded-md" onclick="addFormSubmitHandler()">Register</button>
+              </form>
+              </div>
+              <div class="w-1/2">
+                <img src="./src/images/login.png" class="h-[100vh] w-full" alt="">
+                </div>
+                </div>
+              </div>
+                </body>
+  <script>
+     const addFormSubmitHandler = () => {
+      const form = document.getElementById('loginForm');
+      if(!form){
+        console.log("missing") 
+      }
+      form.addEventListener('submit', (event) => {
+        console.log("Here to conquer")
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const name = document.getElementById('name').value;
+        const role = document.getElementById('role').value
+
+        fetch('http://localhost:3000/users/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            role:role,
+            name:name
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+         if(data.status===201){
+          window.location.href = 'index.html';
+         }
+         else{
+          alert(data.message)
+         }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+    };
+  </script>              
+                </html>
+                <p class="font-bold text-3xl mt-16">Welcome</p>
+                <p class="text-sm font-medium text-gray-500 mt-3"><span class="text-[#2DAE49]">GoGreen</span> welcomes you! <br> Please enter your details to register!</p>

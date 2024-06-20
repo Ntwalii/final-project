@@ -5,79 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.3.0/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet"/>
     <link rel="stylesheet" href="/src/output.css" />
     <title>Website Project</title>
   </head>
-  <script>
-    const loadComponents = (id, url) => {
-      fetch(url)
-        .then((response) => response.text())
-        .then((html) => {
-          document.getElementById(id).innerHTML = html;
-    })
-    };
-    window.onload = () => {
-      loadComponents("nav", "src/sections/sideNavBar.html");
-
-    };
-  </script>
   <body class="">
     <div class="flex">
-    <div id="yeah"></div>
-    <div id="main" class="h-[100vh] w-4/5 pl-10 py-5 pr-16 bg-customGray">
+    <div id="nav"></div>
+    <div id="main" class="lg:h-[100vh] w-full lg:w-4/5 pl-10 py-5 pr-16 bg-customGray">
     </div>
   </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
 <script>
-  const element=document.getElementById('yeah')
+  const element=document.getElementById('nav')
   const main=document.querySelector('#main')
   console.log(main)
-    function loadDashboard(){
+  function loadScheduleForm(){
     main.innerHTML=`<div class="flex justify-between">
+        <div>
+        <p class="font-bold text-3xl">Add an appointment</p>
+        <p class="font-medium text-[#7E7C7C] text-sm">14th April 2024</p>
+        </div>
+        <div class="h-full my-auto">
+            <input type="text" placeholder="Search" class="px-10 rounded-3xl bg-[#EFEFEF] py-2 border-none">
+        </div>
+    
+      
+    </div>
+    <div class="w-full bg-white h-[70vh] mt-16 rounded-md relative">
+      <i id="cancel" class="fa-solid fa-xmark text-2xl absolute right-10 top-5"></i>
+      <p class="pt-20 text-center font-semibold text-2xl">Add a new schedule</p>
+      <form action="" class="px-10">
+        <div class="flex flex-row gap-8 mt-12">
+          <input type="text" id="trip-date" name="trip-date" placeholder="Pick a date" class="w-1/2 px-5 rounded-md py-2 border-[#8a8a8a] border">
+          <input type="text" id="trip-date" name="trip-date" placeholder="Insert a route" class="w-1/2 px-5 rounded-md py-2 border-[#8a8a8a] border">
+          </div>
+        <textarea name="Comment" id="Comment" class="w-full h-36 mt-5 px-5 rounded-md py-2 border-[#8a8a8a] border" placeholder="Additional comments/ Notes"></textarea>
+        <button class="w-1/2 px-5 rounded-md py-2 font-semibold mt-3 text-white  bg-[#1344B2]">Schedule</button>
+      </form>
+
+    </div>`
+
+    const cancel=document.getElementById('cancel')
+    cancel.addEventListener('click',loadAppointments)
+  }
+
+    function loadDashboard(){
+    main.innerHTML=`
+    <a class="lg:hidden absolute text-2xl top-16 right-8" href="/mobileNav.html"><i class="fa-solid fa-bars "></i></a>
+    <div class="lg:flex justify-between lg:mt-auto mt-10">
     <div>
     <p class="font-bold text-3xl">Good morning</p>
     <p class="font-medium text-[#7E7C7C] text-sm">14th April 2024</p>
     </div>
-    <div class="h-full my-auto">
+    <div class="h-full my-auto mt-10 lg:mt-auto">
         <input type="text" placeholder="Search" class="px-10 rounded-3xl bg-[#EFEFEF] py-2 border-none">
     </div>
 
   
 </div>
-<div class="description mt-10 text-[#494949] font-medium text-2xl">
+<div class="description mt-10 text-[#494949] font-medium text-lg lg:text-md">
     <p>Welcome to your dashboard! Here you can efficiently manage your routes, track your collection schedule, and monitor your performance to help keep our community <span class="text-[#1344B2]">clean</span> and <span class="text-[#2DAE49]">green.</span></p>
 </div>
-<div class="flex gap-10">
-    <div class="bg-white mt-10 rounded-xl p-5 w-3/5 h-[370px]">
+<div class="lg:flex gap-10">
+    <div class="bg-white mt-10 rounded-xl p-5 w-full lg:w-3/5 lg:h-[370px]">
     <p class="font-semibold text-[#3d3d3d] text-lg">Scheduled collections</p>
-    <div class="flex gap-20 mt-5 text-[#1344B2] font-semibold">
+    <div class="flex gap-10 lg:gap-20 mt-5 text-[#1344B2] font-medium lg:font-semibold">
        <div>
-        <p>Date</p>
+        <p>Day</p>
         <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3">
-        <p>Tue Jan 23 2020</p>
-        <p>Tue Jan 23 2020</p>
-        <p>Tue Jan 23 2020</p>
-        <p>Tue Jan 23 2020</p>
-        <p>Tue Jan 23 2020</p>
+        <p>MONDAY</p>
+        <p>TUESDAY</p>
+        <p>WEDNESDAY</p>
+        <p>THURSDAY</p>
+        <p>FRIDAY</p>
         </div>
         </div>
        <div>
         <p>Routes</p>
         <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3">
-        <p>Kg 65 st</p>
-        <p>Kg 65 st</p>
-        <p>Kg 65 st</p>
-        <p>Kg 65 st</p>
-        <p>Kg 65 st</p>
+        <p>Kg 65</p>
+        <p>Kg 65</p>
+        <p>Kg 65</p>
+        <p>Kg 65</p>
+        <p>Kg 65</p>
         </div>
         </div>
        <div>
-        <p>Number(Appointments)</p>
-        <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3">
+        <p  class"hidden lg:flex">Appointments</p>
+        <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3 hidden lg:block">
         <p>5</p>
         <p>5</p>
         <p>5</p>
@@ -89,15 +111,15 @@
     </div>
     <button class="w-full bg-[#1344B2] py-2 mt-5 rounded-md text-white font-semibold">View the overall schedule</button>
     </div>
-    <div class="bg-white mt-10 rounded-xl p-5 w-2/5 h-[370px]">
+    <div class="bg-white mt-10 rounded-xl p-5 w-full lg:w-2/5 lg:h-[370px]">
         <p class="font-semibold text-[#3d3d3d] text-lg">Recycling tracking</p>
-        <div class="flex gap-20 mt-5 text-[#1344B2] font-semibold">
+        <div class="flex gap-10 lg:gap-20 mt-5 text-[#1344B2] font-semibold">
            <div>
             <p>Date</p>
             <div class="text-[#3d3d3d] mt-5 flex flex-col gap-5">
-            <p>Tue Jan 23 2020</p>
-            <p>Tue Jan 23 2020</p>
-            <p>Tue Jan 23 2020</p>
+            <p>MONDAY</p>
+            <p>TUESDAY</p>
+            <p>WEDNESDAY</p>
            
             </div>
             </div>
@@ -111,10 +133,11 @@
             </div>
             
         </div>
-        <button class="w-full bg-customBlue text-black py-2 mt-16 rounded-md text-white font-semibold">View the overall schedule</button>
+        <button class="w-full bg-[#1344B2] text-black py-2 mt-16 rounded-md text-white font-semibold">View the recycling page</button>
         </div>
 </div>`
 }
+loadDashboard()
 
 function loadAppointments(){
   main.innerHTML=`      <div class="flex justify-between">
@@ -131,7 +154,7 @@ function loadAppointments(){
         <img src="./src/images/light.png" class="py-2" alt="">
         <p class="my-auto">Add to your schedule</p>
       </div>
-      <button class="py-1 rounded-md text-white font-medium px-10 my-auto bg-[#1344B2]">
+      <button id='book' class="py-1 rounded-md text-white font-medium px-10 my-auto bg-[#1344B2]">
         Book
       </button>
     </div>
@@ -180,6 +203,8 @@ function loadAppointments(){
       </div>
     </div>
     </div>`
+    const bookButton=document.getElementById('book')
+    book.addEventListener('click', loadScheduleForm)
 }
 
   function initializeSideBar() {
@@ -191,30 +216,32 @@ function loadAppointments(){
         element.addEventListener('click', (e) => {
             e.stopPropagation(); 
             if(e.target===dash){
-            dash.setAttribute('class','flex p-5 border-2 rounded-md bg-customBlue')
-            appo.setAttribute('class',"flex p-5")
-            route.setAttribute('class',"flex p-5")
+            dash.setAttribute('class','flex p-3 border-2 rounded-md bg-customBlue')
+            appo.setAttribute('class',"flex p-3")
+            route.setAttribute('class',"flex p-3")
             loadDashboard();
           }
           else if(e.target===appo){
-            appo.setAttribute('class','flex p-5 border-2 rounded-md bg-customBlue')
-            dash.setAttribute('class',"flex p-5")
-            route.setAttribute('class',"flex p-5")
+            appo.setAttribute('class','flex p-3 border-2 rounded-md bg-customBlue')
+            dash.setAttribute('class',"flex p-3")
+            route.setAttribute('class',"flex p-3")
             loadAppointments()
           }
           else if(e.target===route){
-            route.setAttribute('class','flex p-5 border-2 rounded-md bg-customBlue')
-            appo.setAttribute('class',"flex p-5")
-            dash.setAttribute('class',"flex p-5")
+            route.setAttribute('class','flex p-3 border-2 rounded-md bg-customBlue')
+            appo.setAttribute('class',"flex p-3")
+            dash.setAttribute('class',"flex p-3")
           }
         });
     }
   window.onload=()=>{
     
-    element.innerHTML=`<div class=' h-[100vh] flex flex-col space-y-7 pl-10 pt-32 border-r-2 font-medium'>
-    <p class='flex p-5' id='dash'><img class='mr-5' src='./src/images/1828791 1.png' alt=''>Dashboard</p>
-    <p class='flex p-5' id='route'><img class='mr-5' src='./src/images/distance.png' alt=''>Route management</p>
-    <p class='flex p-5' id='appo'><img class='mr-5' src='./src/images/appointment.png' alt=''>Appointments</p>
+    element.innerHTML=`<div class='w-72 h-[100vh] hidden lg:flex flex-col space-y-7 pl-10 pt-16 border-r-2 font-medium'>
+      <img src="./src/images/logo.png" class="ml-3 w-40 mb-16" alt="">
+    <p class='flex p-3' id='dash'><img class='mr-5' src='./src/images/1828791 1.png' alt=''>Dashboard</p>
+    <p class='flex p-3' id='route'><img class='mr-5' src='./src/images/distance.png' alt=''>Route management</p>
+    <p class='flex p-3' id='appo'><img class='mr-5' src='./src/images/appointment.png' alt=''>Appointments</p>
+    <a class="pt-20 ml-3 " href="/index.html"><i class="fa-solid fa-arrow-right-from-bracket mr-5"></i> Log out</a>
 </div>`
 initializeSideBar();
   }
