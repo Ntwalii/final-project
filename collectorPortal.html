@@ -176,86 +176,139 @@ fetch(url,
     cancel.addEventListener('click',loadAppointments)
   }
 
-    function loadDashboard(){
-    main.innerHTML=`
-    <a class="lg:hidden absolute text-2xl top-16 right-8" href="/mobileNav.html"><i class="fa-solid fa-bars "></i></a>
-    <div class="lg:flex justify-between lg:mt-auto mt-10">
+  function loadDashboard(){
+    main.innerHTML=`<div class="flex justify-between">
     <div>
     <p class="font-bold text-3xl">Good morning</p>
     <p class="font-medium text-[#7E7C7C] text-sm">14th April 2024</p>
     </div>
-    <div class="h-full my-auto mt-10 lg:mt-auto">
+    <div class="h-full my-auto">
         <input type="text" placeholder="Search" class="px-10 rounded-3xl bg-[#EFEFEF] py-2 border-none">
     </div>
 
   
 </div>
-<div class="description mt-10 text-[#494949] font-medium text-lg lg:text-md">
+<div class="description mt-10 text-[#494949] font-medium text-md">
     <p>Welcome to your dashboard! Here you can efficiently manage your routes, track your collection schedule, and monitor your performance to help keep our community <span class="text-[#1344B2]">clean</span> and <span class="text-[#2DAE49]">green.</span></p>
 </div>
-<div class="lg:flex gap-10">
-    <div class="bg-white mt-10 rounded-xl p-5 w-full lg:w-3/5 lg:h-[370px]">
+<div class="flex gap-10">
+    <div class="bg-white mt-10 rounded-xl p-5 w-3/5 h-[370px]">
     <p class="font-semibold text-[#3d3d3d] text-lg">Scheduled collections</p>
-    <div class="flex gap-10 lg:gap-20 mt-5 text-[#1344B2] font-medium lg:font-semibold">
+    <div class="flex gap-20 mt-5 text-[#1344B2] font-semibold" id="newColumn">
        <div>
-        <p>Day</p>
-        <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3">
-        <p>MONDAY</p>
-        <p>TUESDAY</p>
-        <p>WEDNESDAY</p>
-        <p>THURSDAY</p>
-        <p>FRIDAY</p>
+        <p>Recycled and Collected</p>
+        <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3" id="appointId">
+
         </div>
         </div>
        <div>
-        <p>Routes</p>
-        <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3">
-        <p>Kg 65</p>
-        <p>Kg 65</p>
-        <p>Kg 65</p>
-        <p>Kg 65</p>
-        <p>Kg 65</p>
-        </div>
-        </div>
-       <div>
-        <p  class"hidden lg:flex">Appointments</p>
-        <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3 hidden lg:block">
-        <p>5</p>
-        <p>5</p>
-        <p>5</p>
-        <p>5</p>
-        <p>5</p>
+        <p>Number(Appointments)</p>
+        <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3" id="recycleId">
         </div>
         </div>
         
     </div>
     <button class="w-full bg-[#1344B2] py-2 mt-5 rounded-md text-white font-semibold">View the overall schedule</button>
     </div>
-    <div class="bg-white mt-10 rounded-xl p-5 w-full lg:w-2/5 lg:h-[370px]">
+    <div class="bg-white mt-10 rounded-xl p-5 w-2/5 h-[370px]">
         <p class="font-semibold text-[#3d3d3d] text-lg">Recycling tracking</p>
-        <div class="flex gap-10 lg:gap-20 mt-5 text-[#1344B2] font-semibold">
+        <div class="flex gap-20 mt-5 text-[#1344B2] font-semibold" id="recycleColumn1">
            <div>
-            <p>Date</p>
-            <div class="text-[#3d3d3d] mt-5 flex flex-col gap-5">
-            <p>MONDAY</p>
-            <p>TUESDAY</p>
-            <p>WEDNESDAY</p>
+            <p>Type</p>
+            <div class="text-[#3d3d3d] mt-5 flex flex-col gap-5" id="typeColumn">
            
             </div>
             </div>
            <div>
-            <p>Status</p>
-            <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3">
-                <div class="w-full bg-[#2DAE49] p-2 -mt-2 rounded-md text-white font-semibold">Completed</div>
-                <div class="w-full bg-[#2DAE49] p-2 -mt-2 rounded-md text-white font-semibold">Completed</div>
-                <div class="w-full bg-[#AE0101] p-2 -mt-2 rounded-md text-white font-semibold text-center">Pending</div>
+            <p>Appointments</p>
+            <div class="text-[#3d3d3d] mt-5 flex flex-col gap-3" id="typeNumber">
+            
             </div>
             </div>
             
         </div>
-        <button class="w-full bg-[#1344B2] text-black py-2 mt-16 rounded-md text-white font-semibold">View the recycling page</button>
+        <button class="w-full bg-[#1344B2] text-black py-2 mt-16 rounded-md text-white font-semibold">View the overall schedule</button>
         </div>
 </div>`
+
+const pathUrl  = "/stats/collector"
+    const url = `${baseUrl}${pathUrl}`
+    const authToken = localStorage.getItem("token")
+    const appointId = document.getElementById("appointId")
+    const recycleId = document.getElementById("recycleId")
+    const typeColumn = document.getElementById("typeColumn")
+    const typeNumber = document.getElementById("typeNumber")
+    fetch(url,
+    {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    }
+  }
+    ).then(response=>response.json()).
+    then(data=>{
+      if(data.status===200){
+        let isRecycleThere = false;
+        let isCollectedThere = false;
+        let isTypeThere = false;
+        let inputHtmlAppoint="";
+        let inputHtmlRecycle="";
+        let inputHtmlTypeColumn="";
+        let inputHtmlTypeNumber="";
+        if(data.data.recycle.length>0){
+          isRecycleThere=true
+          data.data.recycle.forEach(element=>{
+            const value1 = element.rs?"Recycled":"Un-recycled"
+            inputHtmlAppoint+=` <p>${value1}</p>`
+            inputHtmlRecycle+=`<p>${element.tc}</p>`
+          })
+        }
+        if(data.data.collection.length>0){
+          isCollectedThere=true
+
+          data.data.collection.forEach(element=>{
+            const value1 = element.cs?"Collected":"Un-collected"
+            inputHtmlAppoint+=` <p>${value1}</p>`
+            inputHtmlRecycle+=`<p>${element.tc}</p>`
+          })
+        }
+
+        
+        if(data.data.plasticType.length>0){
+          console.log("Type available")
+          data.data.plasticType.forEach(element=>{
+            const value1 = element.t
+            inputHtmlTypeColumn+=` <p>${value1}</p>`
+            inputHtmlTypeNumber+=`<div class="w-full bg-[#2DAE49] p-2 -mt-2 rounded-md text-white font-semibold">${element.tc}</div>`
+          })
+          typeColumn.innerHTML=inputHtmlTypeColumn
+          typeNumber.innerHTML = inputHtmlTypeNumber
+        }
+
+        else{
+          const recycleColumn1 = document.getElementById("recycleColumn1")
+          recycleColumn1.innerHTML=`<p> No stastics</p>`
+
+        }
+
+
+        if(isCollectedThere || isRecycleThere){
+          appointId.innerHTML = inputHtmlAppoint
+          recycleId.innerHTML = inputHtmlRecycle
+        }
+        else{
+          const newColumn = document.getElementById("newColumn")
+          newColumn.innerHTML = `<p> No statistics <p/>`
+
+        }
+      
+
+      }
+    })
+
+
+
 }
 loadDashboard()
 
