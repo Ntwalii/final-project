@@ -109,10 +109,10 @@
     </div>
     <div class="w-full bg-white h-[70vh] mt-16 rounded-md relative">
       <i id="cancel" class="fa-solid fa-xmark text-2xl absolute right-10 top-5"></i>
-      <p class="pt-20 text-center font-semibold text-2xl">Add a new schedule</p>
+      <p class="pt-10 text-center font-semibold text-2xl">Add a new schedule</p>
       <form action="" class="px-10">
-        <div class="flex flex-row gap-8 mt-12">
-          <select id="day" class="my-3 border border-gray-400 w-3/4 py-1 px-4 rounded-md" onchange = "handleChangeDay()">
+        <div class="flex flex-row gap-8 mt-4">
+          <select id="day" class="my-3 border border-gray-400 w-2/4 py-1 px-4 rounded-md" onchange = "handleChangeDay()">
                   <option value="MONDAY" >MONDAY</option>
                   <option value="TUESDAY">TUESDAY</option>
                   <option value="WEDNESDAY" >WEDNESDAY</option>
@@ -121,13 +121,13 @@
                   <option value="SATURDAY">SATURDAY</option>
                   <option value="SUNDAY" >SUNDAY</option>
               </select>   
-          <select id="routes"  class="w-1/2 px-5 rounded-md py-2 border-[#8a8a8a] border" required>
-            <option value="" disabled selected>Select a route</option>
-            </select>
+              <select id="routes" class="my-3 border border-gray-400 w-2/4 py-1 px-4 rounded-md">
+                  <option value="" disabled selected>Select a route</option>
+              </select>  
 
           </div>
         <textarea name="Comment" id="comment" class="w-full h-36 mt-5 px-5 rounded-md py-2 border-[#8a8a8a] border" placeholder="Additional comments/ Notes" required></textarea>
-        <select id="type" class="my-3 border border-gray-400 w-3/4 py-1 px-4 rounded-md" >
+        <select id="type" class="my-3 border border-gray-400 w-full py-1 px-4 rounded-md" >
                   <option value="" disabled selected>Select waste type</option>          
                   <option value="NON-PLASTIC">NON-PLASTIC</option>
                   <option value="PLASTIC">PLASTIC</option>
@@ -202,7 +202,7 @@
             </div>
             
         </div>
-        <button class="w-full bg-customBlue text-black py-2 mt-16 rounded-md text-white font-semibold">View the overall schedule</button>
+        <button class="w-full bg-[#1344B2] text-black py-2 mt-16 rounded-md text-white font-semibold">View the overall schedule</button>
         </div>
 </div>`
 
@@ -392,6 +392,7 @@ function loadAppointments(){
     element.innerHTML=`<div class='w-72 h-[100vh] flex flex-col space-y-7 pl-10 pt-32 border-r-2 font-medium'>
     <p class='flex p-3' id='dash'><img class='mr-5' src='./src/images/1828791 1.png' alt=''>Dashboard</p>
     <p class='flex p-3' id='appo'><img class='mr-5' src='./src/images/appointment.png' alt=''>Appointments</p>
+    <a class="pt-20 ml-3 " href="/index.html"><i class="fa-solid fa-arrow-right-from-bracket mr-5"></i> Log out</a>
 </div>`
 initializeSideBar();
   }
