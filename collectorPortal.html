@@ -11,6 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
       rel="stylesheet"/>
     <link rel="stylesheet" href="/src/output.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>Website Project</title>
   </head>
   <body class="">
@@ -295,7 +296,9 @@ function loadAppointments(){
       let typeInput = '<p class="text-[#424242] border-b bg-customGray">Types</p>'
       let date = '<p class="text-[#424242] border-b bg-customGray">Date</p>'
       let route = '<p class="text-[#424242] border-b bg-customGray">Routes</p>'
-      let collectionStatus = '<p class="text-[#424242] border-b bg-customGray">Status</p>'
+      let collectionStatus = '<p class="text-[#424242] border-b bg-customGray">Collection</p>'
+      let recycleStatus ='<p class="text-[#424242] border-b bg-customGray">Recycle</p>'
+
       if(data.data.length>0){
        data.data.forEach(element=>{
         typeInput += ` <p class="border-b">${element.type}</p>`
@@ -303,15 +306,22 @@ function loadAppointments(){
        const localDateOnly = localDateTime.toISOString().split('T')[0];
         date +=`<p class="border-b">${localDateOnly}</p>` 
         route +=`<p class="border-b">${element.routeName}</p>` 
-        const status = element.isCollected ? "Collected":"UnCollected"
-        collectionStatus += `<p class="border-b">${status}</p>`
+        const status = element.isCollected ? "Collected":"Un-Collected"
+        const statusColor = element.isCollected?"border-b text-[#2DAE49]":"border-b text-red-500 cursor-pointer"
+        collectionStatus += `<p class="${statusColor}" id=${element.id} onclick="collect(event)" >${status}</p>`
+          const recycle = element.isRecycled ? "Recycled":"Un-recycled"
+        const recycleColor = element.isRecycled?"border-b text-[#2DAE49]":"border-b text-red-500 cursor-pointer"  
+        recycleStatus += `<p class="${recycleColor}" id=${element.id} onclick="recycle(event)" >${recycle}</p>`
+
        })
        const typeInputDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${typeInput}</div>`
        const dateDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${date}</div>`
        const routeDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${route}</div>`
        const statusDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${collectionStatus}</div>`
+       const recycleDiv = `<div id="Names" class="w-1/5 gap-2 border flex flex-col"> ${recycleStatus}</div>`
 
-       appTable.innerHTML=typeInputDiv+dateDiv+ routeDiv+statusDiv
+
+       appTable.innerHTML=typeInputDiv+dateDiv+ routeDiv+statusDiv+recycleDiv
       }
       else{
         appTable.innerHTML="<p> No available appointments for you </p>"
@@ -324,6 +334,63 @@ function loadAppointments(){
     )
 
 }
+const recycle = (event)=>{
+  event.preventDefault()
+  console.log("Id from button",event.target.id)
+  const recycleId = event.target.id
+  const pathUrl = "/waste/recycle"
+    const url = `${baseUrl}${pathUrl}?id=${recycleId}`
+    const authToken = localStorage.getItem("token")
+    fetch(url,
+    {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    }
+  }
+    ).then(response=>response.json()).
+    then(data=>{
+      if(data.status===200){
+        loadAppointments()
+      }
+      else{
+        alert(data.message)
+      }
+    }).catch(err=>{
+      alert("Error in system")
+    })
+
+}
+
+const collect = (event)=>{
+  event.preventDefault()
+  console.log("Id from button",event.target.id)
+  const recycleId = event.target.id
+  const pathUrl = "/waste/collectWaste"
+    const url = `${baseUrl}${pathUrl}?id=${recycleId}`
+    const authToken = localStorage.getItem("token")
+    fetch(url,
+    {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    }
+  }
+    ).then(response=>response.json()).
+    then(data=>{
+      if(data.status===200){
+        loadAppointments()
+      }
+      else{
+        alert(data.message)
+      }
+    }).catch(err=>{
+      alert("Error in system")
+    })
+}
+
   function initializeSideBar() {
         const element = document.querySelector("div");
         const dash = document.getElementById("dash");
