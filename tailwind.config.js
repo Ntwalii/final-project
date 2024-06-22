@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 import colors from 'tailwindcss/colors'
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
 export const content = ["./src/**/*.{html,js}", "./*.html"]
 export const theme = {
   extend: {
