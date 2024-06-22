@@ -1,0 +1,289 @@
+body{
+    margin: 0;
+    padding: 0;
+
+}
+header{
+    display: flex;
+}
+.logo{
+    padding-right: 400px;
+    width: 200px;
+    margin: 14px auto;
+}
+    
+.nav{
+list-style:none;
+display: flex;
+/* text-align: right; */
+margin:auto;
+
+}
+.navbar{
+    padding-right: 10%;
+    text-align: center;
+    display: flex;
+}
+.nav li{
+    font-weight: 700;
+    margin: auto 0 auto 30px;
+    font-size:20px;
+}
+.nav a{
+    text-decoration: none;
+}
+.nav button{
+    display: flex;
+    border-radius: 30px;
+    padding: auto 20px;
+    border: none;
+    background-color: #1344B2;
+    color:white
+}
+
+.nav button p{
+ margin:10px 20px;   
+}
+.book{
+    background: url("assets/2022-06-05_Vrbo_APFT2_Barcelona_Therin_House_2_4605_2_1.png");
+    background-repeat: no-repeat;
+    height: 600px;
+    width: 100%;
+}
+#book{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 0 5% 5%;
+    background-color: rgb(219, 219, 219);
+    padding: 8px;
+    border-radius: 10px;
+}
+.book h1{
+    margin: 15% 5% 1%;
+    color: white;
+    font-size: 3.5rem;
+}
+#book button{
+    width:50%;
+    height:50px;
+    display: flex;
+    justify-content: left;
+    border-radius: 10px;
+    border:0.5px solid rgb(121, 121, 121);
+    margin:0 3px;
+    background-color: white;
+
+}
+#book img{
+    width: 30px;
+    text-align: left;
+    margin: 8px 0;
+   
+}
+#book p{
+   font-size: 14px;
+   color: rgb(83, 83, 83); 
+   margin-left:20px
+}
+#book .seek{
+    justify-content: center;
+    width: 8%;
+    border-radius: 40px;
+    padding: 15px;
+    background-color: #191e3b;
+    color: white;
+    border: none;
+    font-weight: 700;
+    font-size: 15px;
+}
+.card{
+    /* height:60%;*/
+    width: 20%;
+    border: 0.5px solid #b7b7bb;
+    border-radius: 10px;
+    margin-left: 10px;
+    overflow: hidden;
+}
+.card img{
+width: 100%;
+}
+.card p{
+    margin-left: 10px;
+}
+.destinations{
+    display: flex;
+    font-weight: 800;
+    justify-content: center;
+    
+}
+.part-2 h2{
+    margin-left:120px ;
+    font-size:30px;
+}
+.part-2{
+    margin-top: 5%;
+}
+.part-2h1{
+    margin-left:120px;
+    margin-top: 5%;
+}
+.accomodations{
+    margin:0 120px;
+    display: flex;
+}
+.card2{
+    background: url("assets/house.jpeg");
+    height: 250px;
+    width: 300px;
+    background-size: contain;
+    border-radius: 8%;
+    /* margin-right: 5%; */
+    /* background-repeat: no-repeat; */
+}
+.card2 p{
+color: white;
+font-weight: 700;
+font-size: 22px;
+padding-top: 67%;
+padding-left: 5%;
+}
+.card3{
+    margin-left: 5%;
+}
+.holiday{
+    background:url("assets/jon-tyson-OuOmA4_Sncc-unsplash.jpg");
+    width: 80%;
+    height: 80%;
+    margin:10% 10% 5%;
+    border-radius: 10px;
+    object-fit:fill;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.overlay{
+    width: 100%;
+    height: 100%;
+    background-color: #00000093;
+    border-radius: 10px;
+    color: white;
+}
+
+.overlay h3{
+padding: 12% 5% 0;
+font-size:30px;
+}
+.overlay a{
+    text-decoration: none;
+}
+.overlay p{
+    padding: 0 5% 
+}
+.overlay button{
+    margin: 0 5%;
+    height: 40px;
+    width: 200px;
+    border-radius:20px;
+    background-color: #191e3b;
+    color: white;
+    font-weight: 700;
+    border: none;
+}
+.family{
+    margin: 0 10% 0;
+}
+.fampics{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+  
+}
+.famtrip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+}
+
+.famtrip img {
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.holiday2{
+    background:url("assets/jon-tyson-OuOmA4_Sncc-unsplash.jpg");
+    width: 80%;
+    height: 80%;
+    margin:10% 10% 5%;
+    border-radius: 10px;
+}
+.overlay2{
+    width: 100%;
+    height: 100%;
+    background-color: #00000093;
+    border-radius: 10px;
+    color: white;
+}
+
+.overlay2 h3{
+padding: 12% 5% 0;
+font-size:30px;
+}
+
+.overlay2 p{
+    padding: 0 5% 
+}
+.overlay2 button{
+    margin: 0 5%;
+    height: 40px;
+    width: 200px;
+    border-radius:20px;
+    background-color: #191e3b;
+    color: white;
+    font-weight: 700;
+    border: none;
+}
+.info{
+    padding: 0 10%;
+}
+.info h1{
+color: #191e3b;
+}
+.secondh1{
+    padding-top: 2%;
+}
+
+.info a{
+    text-decoration: none;
+    color: #3247bd;
+}
+.popular{
+    color: #191e3b;
+    margin: 5% 10%;
+}
+.popular h3{
+    margin: 4% 2%;
+    font-size: 20px;
+}
+.foot{
+    margin:0 10%;
+}
+.foot img{
+
+    width: 200px;
+
+}
+.realfooter{
+    display: flex;
+    text-align: center;
+}
+.realfooter p{
+    width: 100%;
+    margin-top: 60px;
+}
+.realfooter li{
+    list-style: none;
+}
